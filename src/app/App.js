@@ -6,11 +6,9 @@ import styles from './App.module.css';
 function App() {
   return (
     <div className={styles.page}>
-      <div className={styles.container}>
-        <Suspense>
-          <PostsPage />
-        </Suspense>
-      </div>
+      <Suspense>
+        <PostsPage />
+      </Suspense>
     </div>
   );
 }
