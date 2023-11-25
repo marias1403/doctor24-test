@@ -122,7 +122,7 @@
   left: 0;
   height: 20px;
   width: 20px;
-  border: 2px solid #57606A;
+  border: 2px solid #24292f;
   background-color: transparent;
   box-sizing: border-box;
   border-radius: 3px;
@@ -132,7 +132,7 @@
 }
 
 .checkboxInput:checked ~ .checkboxCheckmark {
-  background-color: #57606A;
+  background-color: #24292f;
   background-image: url('../../../assets/images/checkmark.svg');
   background-position: center;
   background-repeat: no-repeat;
