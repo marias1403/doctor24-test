@@ -1,0 +1,52 @@
+.commentItem {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  column-gap: 10px;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  background-color: #eaeef2;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatarIcon {
+  padding: 0 7px;
+  width: 16px;
+  height: 16px;
+  opacity: .5;
+}
+
+.userName {
+  margin: 5px 0 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.userEmail {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 600;
+  color: #8c959f;
+}
+
+.commentText {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 400;
+  color: #000000;
+}
