@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
 import styles from './Pagination.module.css';
-import { DEFAULT_ITEMS_PER_PAGE } from '../../../constants/constants';
 
-const Pagination = ({ isLoading, posts, total, onSetItemsToDisplay }) => {
+const Pagination = ({ isLoading, posts, total, itemsQuantityPerPage, onSetItemsToDisplay }) => {
   const [currentPage, setCurrentPage] = useState(1);
-
-  const itemsPerPage = DEFAULT_ITEMS_PER_PAGE;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
+  const startIndex = (currentPage - 1) * itemsQuantityPerPage;
+  const endIndex = startIndex + itemsQuantityPerPage;
 
   useEffect(() => {
     onSetItemsToDisplay(posts.slice(startIndex, endIndex));
@@ -21,7 +18,7 @@ const Pagination = ({ isLoading, posts, total, onSetItemsToDisplay }) => {
     setCurrentPage(page);
   };
 
-  const totalPages = Math.ceil(total / itemsPerPage);
+  const totalPages = Math.ceil(total / itemsQuantityPerPage);
 
   const generatePageNumbers = () => {
     const pageNumbers = [];
@@ -32,7 +29,7 @@ const Pagination = ({ isLoading, posts, total, onSetItemsToDisplay }) => {
   };
 
   if (isLoading) {
-    return;
+    return null;
   }
 
   return (
@@ -40,7 +37,7 @@ const Pagination = ({ isLoading, posts, total, onSetItemsToDisplay }) => {
       <div className={styles.wrapper}>
         <button
           onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
+          disabled={currentPage === 1 || itemsQuantityPerPage === posts.length}
           className={styles.button}
         >
           Назад
@@ -58,7 +55,7 @@ const Pagination = ({ isLoading, posts, total, onSetItemsToDisplay }) => {
 
         <button
           onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
+          disabled={currentPage === totalPages || itemsQuantityPerPage === posts.length}
           className={styles.button}
         >
           Вперёд

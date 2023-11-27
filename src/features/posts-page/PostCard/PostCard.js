@@ -1,4 +1,5 @@
 import styles from './PostCard.module.css';
+import userIcon from '../../../assets/images/user-icon.svg';
 
 const PostCard = ({ post }) => {
   return (
@@ -13,7 +14,10 @@ const PostCard = ({ post }) => {
           <button className={`${styles.button} ${styles.deleteButton}`}></button>
         </div>
       </div>
-      <h3 className={styles.author}>Имя пользователя</h3>
+      <div className={styles.userWrapper}>
+        <img className={styles.userIcon} src={userIcon} alt='Иконка пользователя' />
+        <h3 className={styles.author}>{post.username}</h3>
+      </div>
       <h2 className={styles.title}>{post.title}</h2>
       <p className={styles.text}>{post.body}</p>
       <div className={styles.buttonWrapper}>

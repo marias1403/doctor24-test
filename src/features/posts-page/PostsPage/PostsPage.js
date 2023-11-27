@@ -1,33 +1,52 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import postsSelector from '../selectors';
-import { fetchPostsList } from '../slice';
+import { fetchPostsList, fetchUsers } from '../slice';
 import Header from '../../../components/Header/Header';
+import PostListFilters from '../PostListFilters/PostListFilters';
 import PostCardList from '../PostCardList/PostCardList';
+import Pagination from '../Pagination/Pagination';
 import Footer from '../../../components/Footer/Footer';
 import Loader from '../../../components/Loader/Loader';
 import ErrorDisplay from '../../../components/ErrorDisplay/ErrorDisplay';
 import Empty from '../../../components/Empty/Empty';
-import Pagination from '../Pagination/Pagination';
 import styles from './PostPage.module.css';
 
 const PostsPage = () => {
   const [posts, setPosts] = useState([]);
   const [itemsToDisplay, setItemsToDisplay] = useState([]);
+  const [itemsQuantityPerPage, setItemsQuantityPerPage] = useState(10);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const dispatch = useAppDispatch();
-  const selectedPosts = useAppSelector(postsSelector);
+  const selectedPostsPage = useAppSelector(postsSelector);
 
   useEffect(() => {
+    dispatch(fetchUsers());
     dispatch(fetchPostsList());
   }, [dispatch]);
 
   useEffect(() => {
-    setPosts(selectedPosts.posts);
-    setLoading(selectedPosts.loading);
-    setError(selectedPosts.error);
-  }, [selectedPosts]);
+    setLoading(selectedPostsPage.loading);
+    setPosts(preparePosts(selectedPostsPage.posts, selectedPostsPage.users));
+    setError(selectedPostsPage.error);
+  }, [selectedPostsPage]);
+
+  function preparePosts(posts, users) {
+    if (Object.keys(users).length === 0) {
+      return;
+    }
+    let res = [];
+    for (let post of posts) {
+      res.push({
+        id: post.id,
+        body: post.body,
+        title: post.title,
+        username: users[post.userId].username,
+      })
+    }
+    return res;
+  }
 
   if (!posts) {
     return <Empty />;
@@ -40,7 +59,12 @@ const PostsPage = () => {
   return (
     <div className={styles.container}>
       <Header />
-      <main>
+      <main className={styles.main}>
+        <PostListFilters
+          itemsQuantityPerPage={itemsQuantityPerPage}
+          onSetItemsQuantityPerPage={setItemsQuantityPerPage}
+          postsTotal={posts.length}
+        />
         {
           loading ? <Loader /> : <PostCardList posts={itemsToDisplay} />
         }
@@ -48,6 +72,7 @@ const PostsPage = () => {
           isLoading={loading}
           posts={posts}
           total={posts.length}
+          itemsQuantityPerPage={itemsQuantityPerPage}
           onSetItemsToDisplay={setItemsToDisplay}
         />
       </main>
