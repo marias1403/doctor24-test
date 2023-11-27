@@ -16,7 +16,7 @@ const PostCard = ({ post }) => {
       </div>
       <div className={styles.userWrapper}>
         <img className={styles.userIcon} src={userIcon} alt='Иконка пользователя' />
-        <h3 className={styles.author}>{post.username}</h3>
+        <p className={styles.author}>{post.username}</p>
       </div>
       <h2 className={styles.title}>{post.title}</h2>
       <p className={styles.text}>{post.body}</p>

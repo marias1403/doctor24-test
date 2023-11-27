@@ -40,7 +40,7 @@
   font-size: 14px;
   line-height: 14px;
   font-weight: 600;
-  color: #57606A;
+  color: #24292F;
   text-align: left;
 }
 
@@ -92,6 +92,7 @@
 
 .commentButton {
   background-image: url('../../../assets/images/comment-icon.svg');
+  opacity: .3;
 }
 
 .buttonWrapper {

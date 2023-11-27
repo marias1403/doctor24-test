@@ -1,15 +1,35 @@
 .header {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title {
   padding: 0;
   margin: 40px 0;
-  font-size: 20px;
-  line-height: 24px;
-  font-weight: 800;
-  color: #ffffff;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 700;
+  color: #afb8c1;
   text-align: center;
+}
+
+.addButton {
+  margin: 0;
+  padding: 0;
+  height: 35px;
+  width: 150px;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.addButton:active {
+  opacity: .7;
 }

@@ -1,9 +1,9 @@
 .container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
-  column-gap: 20px;
+  justify-content: flex-start;
+  row-gap: 35px;
 }
 
 .wrapper {
@@ -14,12 +14,93 @@
   row-gap: 10px;
 }
 
+.title {
+  margin: 0;
+  padding: 0;
+  font-size: 28px;
+  line-height: 32px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
 .filters {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  column-gap: 15px;
+  column-gap: 40px;
+}
+
+.filterItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+.checkboxWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.selectInput {
+  margin: 0;
+  padding: 0 5px;
+  width: 160px;
+  height: 30px;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #ffffff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('../../../assets/images/down-icon.svg');
+  background-position: 140px center;
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+}
+
+.textInput {
+  margin: 0;
+  padding: 0 5px;
+  width: 250px;
+  height: 30px;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.filterButton {
+  margin: 0;
+  padding: 0;
+  height: 35px;
+  width: 170px;
+  background-color: #d0d7de;
+  border: none;
+  border-radius: 5px;
+  color: #000000;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.filterButton:active {
+  opacity: .7;
 }
 
 .postsQuantity {
@@ -40,23 +121,46 @@
   text-align: left;
 }
 
-.addButton {
+.sortWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 10px;
+}
+
+.sortButton {
   margin: 0;
-  padding: 0;
+  padding: 0 20px;
   height: 35px;
-  width: 150px;
+  min-width: 120px;
+  width: fit-content;
   background-color: transparent;
   border: 1px solid #ffffff;
   border-radius: 5px;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  column-gap: 5px;
+}
+
+.sortButton:active {
+  opacity: .7;
+}
+
+.sortButtonIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.sortButtonText {
   font-size: 14px;
   line-height: 16px;
   font-weight: 500;
   color: #ffffff;
-  cursor: pointer;
-}
-
-.addButton:active {
-  opacity: .7;
 }
 
 .radioItem {
@@ -109,4 +213,46 @@
   height: 10px;
   background-color: #ffffff;
   border-radius: 50%;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  position: relative;
+  cursor: pointer;
+}
+
+.checkboxInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  opacity: 0;
+  z-index: 1;
+}
+
+.checkboxCheckmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  border: none;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  border-radius: 3px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.checkboxInput:checked ~ .checkboxCheckmark::before {
+  background-color: #ffffff;
+  background-image: url('../../../assets/images/checkbox-icon.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  border: none;
 }
