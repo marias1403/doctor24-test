@@ -1,7 +1,14 @@
 import PostCard from '../PostCard/PostCard';
 import styles from './PostCardList.module.css';
 
-const PostCardList = ({ posts, comments, onSetComments, onFetchComments }) => {
+const PostCardList = (
+  {
+    posts,
+    comments,
+    onSetComments,
+    onFetchComments,
+    onDeleteBtnClick
+  }) => {
   return (
     <ul className={styles.list}>
       {posts.map((post) => {
@@ -10,7 +17,8 @@ const PostCardList = ({ posts, comments, onSetComments, onFetchComments }) => {
           post={post}
           comments={comments}
           onSetComments={onSetComments}
-          onFetchComments={onFetchComments} />
+          onFetchComments={onFetchComments}
+          onDeleteBtnClick={onDeleteBtnClick} />
       })}
     </ul>
   );

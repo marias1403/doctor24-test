@@ -3,7 +3,7 @@ import styles from './PostCard.module.css';
 import PostCommentItem from '../PostCommentItem/PostCommentItem';
 import userIcon from '../../../assets/images/user-icon.svg';
 
-const PostCard = ({ post, comments, onSetComments, onFetchComments }) => {
+const PostCard = ({ post, comments, onSetComments, onFetchComments, onDeleteBtnClick }) => {
   const [isCommentBtnAct, setIsCommentBtnAct] = useState(false);
 
   function handleCommentBtnClick() {
@@ -16,9 +16,12 @@ const PostCard = ({ post, comments, onSetComments, onFetchComments }) => {
     }
   }
 
-  const commentsDivHiddenClass = `${styles.commentsContainer} ${styles.hidden}`;
-  const commentBtnClass = `${styles.button} ${styles.commentButton}`;
-  const commentBtnClassAct = `${styles.button} ${styles.commentButton} ${styles.commentButtonActive}`;
+  function handleDeleteBtnClick() {
+    onDeleteBtnClick(post.id);
+  }
+
+  const isCommentDivHidden = isCommentBtnAct ? '' : `${styles.hidden}`;
+  const isCommentBtnActive = isCommentBtnAct ? `${styles.commentButtonActive}` : '';
 
   return (
     <li className={styles.container}>
@@ -29,7 +32,10 @@ const PostCard = ({ post, comments, onSetComments, onFetchComments }) => {
         </div>
         <div className={styles.buttonWrapper}>
           <button className={`${styles.button} ${styles.editButton}`}></button>
-          <button className={`${styles.button} ${styles.deleteButton}`}></button>
+          <button
+            className={`${styles.button} ${styles.deleteButton}`}
+            onClick={handleDeleteBtnClick}>
+          </button>
         </div>
       </div>
       <div className={styles.userWrapper}>
@@ -40,9 +46,9 @@ const PostCard = ({ post, comments, onSetComments, onFetchComments }) => {
       <p className={styles.text}>{post.body}</p>
       <div className={styles.buttonWrapper}>
         <button className={`${styles.button} ${styles.favoriteButton}`}></button>
-        <button className={isCommentBtnAct ? commentBtnClassAct : commentBtnClass} onClick={handleCommentBtnClick}></button>
+        <button className={`${styles.button} ${styles.commentButton} ${isCommentBtnActive}`} onClick={handleCommentBtnClick}></button>
       </div>
-      <div className={isCommentBtnAct ? styles.commentsContainer : commentsDivHiddenClass}>
+      <div className={`${styles.commentsContainer} ${isCommentDivHidden}`}>
         <h3 className={styles.commentsTitle}>Комментарии</h3>
         <ul className={styles.commentsList}>
           {comments.map((comment) => {

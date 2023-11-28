@@ -26,7 +26,15 @@ export const fetchUsers = createAsyncThunk(
 export const postListSlice = createSlice({
   name: NAMESPACE,
   initialState,
-  reducers: {},
+  reducers: {
+    deletePost: (state, action) => {
+      const updatedPosts = state.posts.filter((post) => post.id !== action.payload);
+      return {
+        ...state,
+        posts: updatedPosts,
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchPostsList.pending, (state) => {
       state.loading = true;
@@ -63,5 +71,7 @@ export const postListSlice = createSlice({
     });
   },
 });
+
+export const { deletePost } = postListSlice.actions
 
 export default postListSlice.reducer;

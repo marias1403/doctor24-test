@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import postsSelector from '../selectors';
-import { fetchPostsList, fetchUsers } from '../slice';
+import {fetchPostsList, fetchUsers, deletePost} from '../slice';
 import api from '../../../api/api';
 import Header from '../../../components/Header/Header';
 import PostListFilters from '../PostListFilters/PostListFilters';
@@ -11,6 +11,7 @@ import Footer from '../../../components/Footer/Footer';
 import Loader from '../../../components/Loader/Loader';
 import ErrorDisplay from '../../../components/ErrorDisplay/ErrorDisplay';
 import Empty from '../../../components/Empty/Empty';
+import DeleteConfirmModal from '../../../components/DeleteConfirmModal/DeleteConfirmModal';
 import styles from './PostPage.module.css';
 
 const PostsPage = () => {
@@ -20,6 +21,7 @@ const PostsPage = () => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [postIdToDelete, setPostIdToDelete] = useState(null);
   const dispatch = useAppDispatch();
   const selectedPostsPage = useAppSelector(postsSelector);
 
@@ -33,13 +35,6 @@ const PostsPage = () => {
     setPosts(preparePosts(selectedPostsPage.posts, selectedPostsPage.users));
     setError(selectedPostsPage.error);
   }, [selectedPostsPage]);
-
-  async function fetchCommentByPostId(id) {
-    await api.comment.load(id)
-      .then((res) => {
-        setComments(res);
-      })
-  }
 
   function preparePosts(posts, users) {
     if (Object.keys(users).length === 0) {
@@ -55,6 +50,26 @@ const PostsPage = () => {
       })
     }
     return res;
+  }
+
+  async function fetchCommentByPostId(id) {
+    await api.comment.load(id)
+      .then((res) => {
+        setComments(res);
+      })
+  }
+
+  function handlePostDelete() {
+    dispatch(deletePost(postIdToDelete));
+    setPostIdToDelete(null);
+  }
+
+  function handleDeleteBtnClick(postId) {
+    setPostIdToDelete(postId);
+  }
+
+  function closeAllPopups() {
+    setPostIdToDelete(null);
   }
 
   if (!posts) {
@@ -81,7 +96,8 @@ const PostsPage = () => {
               posts={itemsToDisplay}
               comments={comments}
               onSetComments={setComments}
-              onFetchComments={fetchCommentByPostId} />
+              onFetchComments={fetchCommentByPostId}
+              onDeleteBtnClick={handleDeleteBtnClick} />
         }
         <Pagination
           isLoading={loading}
@@ -92,6 +108,12 @@ const PostsPage = () => {
         />
       </main>
       <Footer />
+      <DeleteConfirmModal
+        isOpen={postIdToDelete !== null}
+        postId={postIdToDelete}
+        onClose={closeAllPopups}
+        onConfirm={handlePostDelete}
+      />
     </div>
   );
 }

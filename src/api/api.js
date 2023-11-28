@@ -16,6 +16,19 @@ export default {
         });
     },
   },
+  post: {
+    delete: (id) => {
+      const options = {
+        method: 'DELETE',
+        url: `${API_URL}/posts/${id}`,
+      };
+      return axios.request(options)
+        .catch((error) => {
+          console.error('Error during API request:', error);
+          throw error;
+        });
+    },
+  },
   users: {
     load: () => {
       const options = {
