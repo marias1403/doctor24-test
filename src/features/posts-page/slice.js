@@ -5,6 +5,7 @@ const NAMESPACE = 'postsPage';
 const initialState = {
   posts: [],
   users: {},
+  favorites: [],
   loading: false,
   error: undefined,
 };
@@ -33,6 +34,23 @@ export const postListSlice = createSlice({
         ...state,
         posts: updatedPosts,
       };
+    },
+    addToFavorites: (state, action) => {
+      const newFavPost = action.payload;
+      const isItemInFavorites = state.favorites.some(post => post.id === newFavPost.id);
+      if (!isItemInFavorites) {
+        const newFavorites = [...state.favorites, newFavPost];
+        return {
+          ...state,
+          favorites: newFavorites,
+        };
+      } else {
+        const newFavorites = state.favorites.filter(post => post.id !== newFavPost.id);
+        return {
+          ...state,
+          favorites: newFavorites,
+        };
+      }
     },
   },
   extraReducers: (builder) => {
@@ -72,6 +90,6 @@ export const postListSlice = createSlice({
   },
 });
 
-export const { deletePost } = postListSlice.actions
+export const { deletePost, addToFavorites } = postListSlice.actions
 
 export default postListSlice.reducer;

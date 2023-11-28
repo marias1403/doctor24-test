@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import postsSelector from '../selectors';
-import {fetchPostsList, fetchUsers, deletePost} from '../slice';
+import { fetchPostsList, fetchUsers, deletePost } from '../slice';
 import api from '../../../api/api';
 import Header from '../../../components/Header/Header';
 import PostListFilters from '../PostListFilters/PostListFilters';

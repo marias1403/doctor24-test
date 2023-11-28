@@ -90,6 +90,10 @@
   background-image: url('../../../assets/images/favorite-icon.svg');
 }
 
+.favBtnActive {
+  background-image: url('../../../assets/images/favorite-active-icon.svg');
+}
+
 .commentButton {
   background-image: url('../../../assets/images/comment-icon.svg');
   opacity: .3;
