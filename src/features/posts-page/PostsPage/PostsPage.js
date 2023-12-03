@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import postsSelector from '../selectors';
-import { fetchPostsList, fetchUsers, deletePost } from '../slice';
+import {fetchPostsList, fetchUsers, deletePost, addPost} from '../slice';
 import api from '../../../api/api';
 import Header from '../../../components/Header/Header';
 import PostListFilters from '../PostListFilters/PostListFilters';
@@ -12,6 +12,8 @@ import Loader from '../../../components/Loader/Loader';
 import ErrorDisplay from '../../../components/ErrorDisplay/ErrorDisplay';
 import Empty from '../../../components/Empty/Empty';
 import DeleteConfirmModal from '../../../components/DeleteConfirmModal/DeleteConfirmModal';
+import EditPostPopup from '../../../components/EditPostPopup/EditPostPopup';
+import AddPostPopup from '../../../components/AddPostPopup/AddPostPopup';
 import styles from './PostPage.module.css';
 
 const PostsPage = () => {
@@ -22,6 +24,8 @@ const PostsPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState(null);
+  const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
+  const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
   const dispatch = useAppDispatch();
   const selectedPostsPage = useAppSelector(postsSelector);
 
@@ -57,11 +61,42 @@ const PostsPage = () => {
       .then((res) => {
         setComments(res);
       })
+      .catch((error) => {
+        console.error('Ошибка при получении комментариев:', error);
+        throw error;
+      });
   }
 
-  function handlePostDelete() {
-    dispatch(deletePost(postIdToDelete));
-    setPostIdToDelete(null);
+  function handleEditPost() {
+
+  }
+
+  function handleAddPost(post) {
+    api.post.create(post.title, post.body, post.userId)
+      .then(() => {
+        dispatch(addPost(post));
+        setIsAddPopupOpen(false);
+      })
+      .catch((error) => {
+        console.error('Ошибка при добавлении поста:', error);
+        throw error;
+      });
+  }
+
+  function handleAddPostBtnClick() {
+    setIsAddPopupOpen(true);
+  }
+
+  async function handlePostDelete() {
+    await api.post.delete(postIdToDelete)
+      .then(() => {
+        dispatch(deletePost(postIdToDelete));
+        setPostIdToDelete(null);
+      })
+      .catch((error) => {
+        console.error('Ошибка при удалении:', error);
+        throw error;
+      });
   }
 
   function handleDeleteBtnClick(postId) {
@@ -70,6 +105,8 @@ const PostsPage = () => {
 
   function closeAllPopups() {
     setPostIdToDelete(null);
+    setIsEditPopupOpen(false);
+    setIsAddPopupOpen(false);
   }
 
   if (!posts) {
@@ -82,7 +119,7 @@ const PostsPage = () => {
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header onBtnClick={handleAddPostBtnClick} />
       <main className={styles.main}>
         <PostListFilters
           itemsQuantityPerPage={itemsQuantityPerPage}
@@ -113,6 +150,19 @@ const PostsPage = () => {
         postId={postIdToDelete}
         onClose={closeAllPopups}
         onConfirm={handlePostDelete}
+      />
+      <EditPostPopup
+        postTitle={}
+        postText={}
+        postAuthor={}
+        isOpen={isEditPopupOpen}
+        onClose={closeAllPopups}
+        onEditPost={handleEditPost}
+      />
+      <AddPostPopup
+        isOpen={isAddPopupOpen}
+        onClose={closeAllPopups}
+        onAddPost={handleAddPost}
       />
     </div>
   );

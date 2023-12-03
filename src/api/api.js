@@ -11,12 +11,35 @@ export default {
       return axios.request(options)
         .then((res) => res.data)
         .catch((error) => {
-          console.error('Error during API request:', error);
+          console.error('Ошибка при получении постов:', error);
           throw error;
         });
     },
   },
   post: {
+    create: (title, body, userId) => {
+      const options = {
+        method: 'POST',
+        url: `${API_URL}/posts`,
+        data: JSON.stringify({
+          title,
+          body,
+          userId,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      };
+      return axios(options)
+        .then((res) => res.data)
+        .catch((error) => {
+          console.error('Ошибка при создании поста:', error);
+          throw error;
+        });
+    },
+    edit: () => {
+
+    },
     delete: (id) => {
       const options = {
         method: 'DELETE',
@@ -24,7 +47,7 @@ export default {
       };
       return axios.request(options)
         .catch((error) => {
-          console.error('Error during API request:', error);
+          console.error('Ошибка при удалении поста:', error);
           throw error;
         });
     },
@@ -38,7 +61,7 @@ export default {
       return axios.request(options)
         .then((res) => res.data)
         .catch((error) => {
-          console.error('Error during API request:', error);
+          console.error('Ошибка при загрузке пользователей:', error);
           throw error;
         });
     },
@@ -52,7 +75,7 @@ export default {
       return axios.request(options)
         .then((res) => res.data)
         .catch((error) => {
-          console.error('Error during API request:', error);
+          console.error('Ошибка при загрузке комментариев:', error);
           throw error;
         });
     },

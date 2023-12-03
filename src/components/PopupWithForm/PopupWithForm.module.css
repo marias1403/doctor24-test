@@ -1,0 +1,97 @@
+.popup {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility .5s, opacity .5s ease-out;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,.5);
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.opened {
+  visibility: visible;
+  opacity: 1;
+}
+
+.container {
+  width: 360px;
+  min-height: 180px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.closeButton {
+  background-image: url('../../assets/images/close-icon.svg');
+  width: 25px;
+  height: 25px;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-size: 25px 25px;
+  border: none;
+  position: absolute;
+  top: -25px;
+  right: -30px;
+}
+
+.closeButton:active {
+  opacity: .7;
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: 700;
+  text-align: left;
+  color: #000000;
+}
+
+.form {
+  margin: 30px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  row-gap: 30px;
+}
+
+.buttonWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 4px;
+}
+
+.button {
+  width: 100%;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  background-color: #000000;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #ffffff;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.cancelButton {
+  border: 1px solid #000000;
+  background-color: transparent;
+  color: #000000;
+}
+
+.button:active {
+  opacity: .7;
+}

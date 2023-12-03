@@ -28,6 +28,16 @@ export const postListSlice = createSlice({
   name: NAMESPACE,
   initialState,
   reducers: {
+    addPost: (state, action) => {
+      const newPost = {
+        id: state.posts.length + 1,
+        ...action.payload,
+      };
+      return {
+        ...state,
+        posts: [newPost, ...state.posts],
+      };
+    },
     deletePost: (state, action) => {
       const updatedPosts = state.posts.filter((post) => post.id !== action.payload);
       return {
@@ -90,6 +100,6 @@ export const postListSlice = createSlice({
   },
 });
 
-export const { deletePost, addToFavorites } = postListSlice.actions
+export const { deletePost, addToFavorites, addPost } = postListSlice.actions
 
 export default postListSlice.reducer;
